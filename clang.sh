@@ -97,10 +97,11 @@ esac
 # to avoid issues with system clang on macOS.
 # We **MUST NOT** add bin-safe to the build path. Runtime
 # path is fine.
+# -- fweig: Remove hack so POCL can find clang binaries
 mkdir "$INSTALLROOT/bin-safe"
-mv "$INSTALLROOT"/bin/clang* "$INSTALLROOT/bin-safe/"
-mv "$INSTALLROOT"/bin/llvm-spirv* "$INSTALLROOT/bin-safe/" # Install llvm-spirv tool
-mv "$INSTALLROOT"/bin/git-clang* "$INSTALLROOT/bin-safe/"  # we also need git-clang-format in runtime
+cp "$INSTALLROOT"/bin/clang* "$INSTALLROOT/bin-safe/"
+cp "$INSTALLROOT"/bin/llvm-spirv* "$INSTALLROOT/bin-safe/" # Install llvm-spirv tool
+cp "$INSTALLROOT"/bin/git-clang* "$INSTALLROOT/bin-safe/"  # we also need git-clang-format in runtime
 sed -i.bak -e "s|bin/clang|bin-safe/clang|g" "$INSTALLROOT/lib/cmake/clang/ClangTargets-release.cmake"
 rm "$INSTALLROOT"/lib/cmake/clang/*.bak
 
@@ -111,6 +112,7 @@ EOF
 "$INSTALLROOT/bin-safe/clang++" -v -c test.cc
 
 # Modulefile
+# -- fweig: Change bin-safe to bin, so clang and llvm-config are in the same directory
 mkdir -p etc/modulefiles
 cat > "etc/modulefiles/$PKGNAME" <<EoF
 #%Module1.0
@@ -125,7 +127,7 @@ module load BASE/1.0                                                          \\
             ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 set CLANG_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH \$CLANG_ROOT/bin-safe
+prepend-path PATH \$CLANG_ROOT/bin
 prepend-path LD_LIBRARY_PATH \$CLANG_ROOT/lib
 EoF
 mkdir -p "$INSTALLROOT/etc/modulefiles"
