@@ -1,6 +1,6 @@
 package: Clang
-version: "v20.1.6"
-tag: "llvmorg-20.1.6"
+version: "v20.1.7"
+tag: "llvmorg-20.1.7"
 source: https://github.com/llvm/llvm-project.git
 requires:
   - "GCC-Toolchain:(?!osx)"
