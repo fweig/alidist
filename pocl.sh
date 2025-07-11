@@ -40,7 +40,9 @@ module load BASE/1.0                                                          \\
 # Our environment
 set POCL_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv POCL_ROOT \$POCL_ROOT
+prepend-path PATH \$POCL_ROOT/bin
 prepend-path LD_LIBRARY_PATH \$POCL_ROOT/lib64
+prepend-path CMAKE_PREFIX_PATH \$POCL_ROOT
 EoF
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 rsync -a --delete etc/modulefiles/ "$INSTALLROOT/etc/modulefiles"
