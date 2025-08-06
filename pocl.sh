@@ -1,7 +1,7 @@
 package: PoCL
-version: "v7.0"
-tag: "release_7_0"
-source: https://github.com/pocl/pocl
+version: "loopvec-next"
+tag: "loopvec-next"
+source: git@github.com:pjaaskel/pocl-priv.git
 requires:
   - Clang
 build_requires:
