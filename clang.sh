@@ -1,7 +1,7 @@
 package: Clang
-version: "v20.1.7"
-tag: "llvmorg-20.1.7"
-source: https://github.com/llvm/llvm-project.git
+version: "v20.1.8-ocl-printf-2"
+tag: "printf-fix"
+source: https://github.com/fweig/llvm-project.git
 requires:
   - "GCC-Toolchain:(?!osx)"
 build_requires:
